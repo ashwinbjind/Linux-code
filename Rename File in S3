@@ -1,0 +1,8 @@
+
+#Rename files in S3 bucket
+read input_date
+for file in $(aws s3 ls s3://Your-Bucket-Name/Path/Folder/ |grep '.File-Name.dat.gz' | awk '{print $NF}' ); do
+    new_file=$(echo "$file" | sed 's/.dat.gz/_RETURN.dat.gz/')
+	echo $new_file
+    aws s3 cp s3:s3://Your-Bucket-Name/Path/Folder/"$file" s3://Your-Bucket-Name/Path/Folder/rename/"$new_file"
+done
